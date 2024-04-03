@@ -100,16 +100,12 @@ async def create_image(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         logging.error("Unhandled database exception: %s", e)
 
 
-async def audio(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logging.info(".........audio.........")
-    # logging.info(update)
-
-    if update.message.document is not None:
-        file_name = update.message.document.file_name
-        file = await context.bot.get_file(update.message.document)
-    else:
+async def audio(update, context):
+    if update.message.audio is not None:
         file_name = update.message.audio.file_name
-        file = await context.bot.get_file(update.message.audio.file_id)
+        # Further processing of the audio message
+    else:
+        logging.error("Received an audio message without audio data")
     
     await file.download_to_drive(f"tmp/{file_name}")
     
