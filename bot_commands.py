@@ -103,11 +103,9 @@ async def create_image(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def audio(update, context):
     if update.message.audio is not None:
         file_name = update.message.audio.file_name
-        # Further processing of the audio message
+        await update.message.audio.download_to_drive(f"tmp/{file_name}")
     else:
         logging.error("Received an audio message without audio data")
-    
-    await file.download_to_drive(f"tmp/{file_name}")
     
     # Run ffmpeg command
     formatted_file_name = f"tmp/{file_name.split('.')[0]}-formatted.wav"
