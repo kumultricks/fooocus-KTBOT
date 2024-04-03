@@ -11,6 +11,9 @@ from bot_commands import setup_handlers
 def clean_tmp_folder():
     while True:
         tmp_folder = 'tmp'  # Replace with your tmp folder path
+        if not os.path.exists(tmp_folder):
+            os.makedirs(tmp_folder)  # Create the directory if it doesn't exist
+        
         current_time = time.time()
         for file in os.listdir(tmp_folder):  # Iterate through files
             file_path = os.path.join(tmp_folder, file)
